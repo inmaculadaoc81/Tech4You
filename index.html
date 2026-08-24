@@ -26,7 +26,7 @@
 
 <section id="cita" class="soft"><div class="wrap calendar-grid"><div><div class="tag">Si prefieres dejarlo agendado</div><h2 class="title">Reserva una cita de 30 minutos.</h2><p class="lead">Elige directamente el día y la hora que mejor te venga.</p></div><div class="calendar"><iframe src="https://cal.com/kelatos/30min?embed=true&theme=light" title="Reserva una cita con Tech4You" loading="lazy"></iframe></div></div></section>
 
-<section id="contacto"><div class="wrap formgrid"><div><div class="tag">Cuéntanos qué ha pasado</div><h2 class="title">No necesitas diagnosticarlo tú.</h2><p class="lead">Dinos qué hace, qué ha dejado de hacer y si tienes información importante dentro.</p><p><b>Teléfono:</b><br><a href="tel:+34918294654">+34 918 29 46 54</a></p></div><div class="formbox"><form action="/api/contacto" method="post"><label>Nombre<input name="nombre" required></label><label>Teléfono<input name="telefono" required></label><label>Correo electrónico<input type="email" name="email" required></label><label>Equipo<select name="equipo"><option>Portátil HP</option><option>Ordenador HP</option><option>All-in-One HP</option><option>Otro</option></select></label><label class="full">¿Qué le ocurre?<textarea name="mensaje" required></textarea></label><label class="full"><input type="checkbox" required style="width:auto"> Acepto la política de privacidad.</label><button class="submit full" type="submit">Enviar consulta</button></form></div></div></section>
+<section id="contacto"><div class="wrap formgrid"><div><div class="tag">Cuéntanos qué ha pasado</div><h2 class="title">No necesitas diagnosticarlo tú.</h2><p class="lead">Dinos qué hace, qué ha dejado de hacer y si tienes información importante dentro.</p><p><b>Teléfono:</b><br><a href="tel:+34918294654">+34 918 29 46 54</a></p></div><div class="formbox"><form id="contact-form"><label>Nombre<input name="nombre" required></label><label>Teléfono<input name="telefono" required></label><label>Correo electrónico<input type="email" name="email" required></label><label>Equipo<select name="equipo"><option>Portátil HP</option><option>Ordenador HP</option><option>All-in-One HP</option><option>Otro</option></select></label><label class="full">¿Qué le ocurre?<textarea name="mensaje" required></textarea></label><label class="full"><input type="checkbox" required style="width:auto"> Acepto la política de privacidad.</label><button class="submit full" type="submit">Enviar consulta</button><p id="form-status" class="full" aria-live="polite"></p></form></div></div></section>
 
 <section class="soft"><div class="wrap"><div class="tag">Dónde estamos</div><h2 class="title">Tech4You en Madrid</h2><iframe class="map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2890.398083402149!2d-3.7114464!3d40.4377011!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd42293e44410b7f%3A0xc0b2c388136a562c!2sHP4you%20%7C%20Servicio%20T%C3%A9cnico%20HP!5e1!3m2!1ses-419!2ses!4v1787577280879!5m2!1ses-419!2ses" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe></div></section>
 </main>
@@ -58,4 +58,46 @@ createChat({
  const boot=()=>{const root=document.querySelector('#n8n-chat');if(!root)return setTimeout(boot,150);new MutationObserver(apply).observe(root,{childList:true,subtree:true,attributes:true,attributeFilter:['style','class']});apply();addEventListener('resize',apply)};boot();
 })();
 </script>
+
+<script>
+(() => {
+  const form = document.querySelector('#contact-form');
+  const status = document.querySelector('#form-status');
+  if (!form) return;
+
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    const button = form.querySelector('button[type="submit"]');
+    status.textContent = 'Enviando...';
+    status.style.color = '#2f6f9f';
+    button.disabled = true;
+
+    try {
+      const response = await fetch('/api/contacto', {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify(Object.fromEntries(new FormData(form).entries()))
+      });
+
+      const data = await response.json().catch(() => ({}));
+
+      if (!response.ok || !data.ok) {
+        throw new Error(data.code || 'SEND_FAILED');
+      }
+
+      status.textContent = 'Consulta enviada correctamente.';
+      status.style.color = '#18743a';
+      form.reset();
+    } catch (error) {
+      console.error('Tech4You form error:', error);
+      status.textContent = 'No se pudo enviar. También puedes contactar por teléfono o WhatsApp.';
+      status.style.color = '#b72f2f';
+    } finally {
+      button.disabled = false;
+    }
+  });
+})();
+</script>
+
 </body></html>
