@@ -47,28 +47,27 @@ createChat({
 </script>
 <script>
 (function(){
- let hideToggle=false;
  const apply=()=>{
   const root=document.querySelector('#n8n-chat'); if(!root)return;
   const t=root.querySelector('.chat-window-toggle,[class*="chat-window-toggle"]');
   const w=root.querySelector('.chat-window,[class*="chat-window"]');
   const mobile=matchMedia('(max-width:560px)').matches;
   if(t){
-   t.style.setProperty('position','fixed','important');t.style.setProperty('right',mobile?'16px':'22px','important');t.style.setProperty('bottom','96px','important');t.style.setProperty('z-index','10060','important');
-   t.style.setProperty('opacity',hideToggle?'0':'1','important');
-   t.style.setProperty('pointer-events',hideToggle?'none':'auto','important');
+   t.style.setProperty('position','fixed','important');
+   t.style.setProperty('left','auto','important');
+   t.style.setProperty('right',mobile?'16px':'22px','important');
+   t.style.setProperty('bottom','96px','important');
+   t.style.setProperty('z-index','10060','important');
+   t.style.setProperty('width','60px','important');
+   t.style.setProperty('height','60px','important');
+   t.style.setProperty('min-width','60px','important');
+   t.style.setProperty('max-width','60px','important');
+   t.style.setProperty('border-radius','50%','important');
+   t.style.setProperty('padding','0','important');
   }
   if(w){w.style.setProperty('position','fixed','important');w.style.setProperty('right',mobile?'12px':'22px','important');if(mobile){w.style.setProperty('left','12px','important');w.style.setProperty('width','auto','important')}w.style.setProperty('bottom','166px','important');w.style.setProperty('z-index','10100','important');}
  };
- const boot=()=>{
-  const root=document.querySelector('#n8n-chat');if(!root)return setTimeout(boot,150);
-  new MutationObserver(apply).observe(root,{childList:true,subtree:true,attributes:true,attributeFilter:['style','class']});
-  apply();addEventListener('resize',apply);
-  const ctas=document.querySelector('.ctas');
-  if(ctas&&'IntersectionObserver' in window){
-   new IntersectionObserver((entries)=>{hideToggle=entries[0].isIntersecting;apply();},{threshold:0}).observe(ctas);
-  }
- };boot();
+ const boot=()=>{const root=document.querySelector('#n8n-chat');if(!root)return setTimeout(boot,150);new MutationObserver(apply).observe(root,{childList:true,subtree:true,attributes:true,attributeFilter:['style','class']});apply();addEventListener('resize',apply)};boot();
 })();
 </script>
 
