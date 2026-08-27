@@ -43,6 +43,13 @@ REVISIÓN (todo lo aplicado en esta primera pasada):
 - api/contacto.js ya usaba SMTP + nodemailer correctamente; no
   requería conversión.
 
+REVISIÓN ADICIONAL — BUG REAL (a petición del cliente):
+- No existía menú móvil: @media(max-width:920px){.links{display:none}}
+  ocultaba la navegación sin ningún botón/desplegable alternativo, así
+  que en móvil no había forma de navegar por el sitio (mismo bug
+  encontrado en DonCargador y Trans4you). Añadido .menu-btn ("☰") +
+  panel #mobileMenu con los mismos enlaces (incluido el teléfono).
+
 Variables SMTP en Vercel (ya configuradas, ver también
 README_FORMULARIO.txt):
 SMTP_HOST=cp7124.webempresa.eu
