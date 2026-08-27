@@ -49,6 +49,12 @@ REVISIÓN ADICIONAL — BUG REAL (a petición del cliente):
   que en móvil no había forma de navegar por el sitio (mismo bug
   encontrado en DonCargador y Trans4you). Añadido .menu-btn ("☰") +
   panel #mobileMenu con los mismos enlaces (incluido el teléfono).
+- Menú de escritorio: varios enlaces ("Qué le pasa", "Tus datos",
+  "Cómo funciona", "Opiniones y vídeos", "Pedir cita") se partían en
+  dos líneas por falta de espacio (mismo problema visto en
+  RecoverLab). Añadido white-space:nowrap a .links a y reducidos
+  ligeramente gap (20px→16px) y font-size (14px→13.5px) para que
+  quepan en una sola línea.
 
 Variables SMTP en Vercel (ya configuradas, ver también
 README_FORMULARIO.txt):
