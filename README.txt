@@ -64,3 +64,21 @@ SMTP_SECURE=true
 SMTP_USER=soporte@kelatos.com
 SMTP_PASS=[configurada únicamente en Vercel]
 CONTACT_EMAIL=soporte@kelatos.com
+
+REVISIÓN ADICIONAL (checklist unificado de la familia, a petición del cliente):
+- H1 ya era distinto ("Tu HP no enciende. Te damos presupuesto en 24
+  horas."), no repite la plantilla "no funciona" de otros repos; no
+  se ha tocado.
+- Texto decorativo ".hero:after" ya se ocultaba en móvil
+  (display:none en ≤560px); no aplica ningún cambio.
+- Añadido "Sábados, domingos y días festivos estamos cerrados" debajo
+  del horario.
+- Añadida franja de aviso de servicio técnico independiente debajo
+  del menú (no existía en ningún sitio del repo).
+- Enlace de política de privacidad: la casilla existía pero sin
+  enlace. Añadido a https://kelatos.com/privacy-policy/, en azul y
+  subrayado.
+- Botón "Atención Telefónica..." sin icono, a diferencia del de
+  WhatsApp. Añadido.
+- Formulario verificado: fetch a /api/contacto coincide con
+  api/contacto.js; conexión correcta.
