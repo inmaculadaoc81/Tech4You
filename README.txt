@@ -82,3 +82,23 @@ REVISIÓN ADICIONAL (checklist unificado de la familia, a petición del cliente)
   WhatsApp. Añadido.
 - Formulario verificado: fetch a /api/contacto coincide con
   api/contacto.js; conexión correcta.
+
+REVISIÓN ADICIONAL (checklist unificado de la familia, a petición del cliente — repo 37/48):
+- BUG REAL — enlace de Cal.com desactualizado. Actualizado a
+  https://cal.com/kelatos/30min?embed=true&theme=light&attendeePhoneNumber=%2B34&overlayCalendar=true.
+- Verificado: el correo soporte@kelatos.com no aparece visible.
+- Verificado: el mensaje prellenado de WhatsApp ya decía "¡Hola
+  Tech4You!"; no requería cambios.
+- BUG REAL — el menú móvil (#mobileMenu, estilo atributo hidden) no
+  tenía ningún listener que lo cerrara al pulsar un enlace. Añadido el
+  script estándar de la familia.
+- Verificado: sin iconos ni imágenes con proporciones fijas
+  incorrectas.
+- BUG REAL — el H1 en móvil estaba en 44px. Corregido a 48px.
+- BUG REAL — botones del hero (.btn) con border-radius de 15px y sin
+  estado hover. Aumentado a border-radius:999px; añadido
+  filter:brightness(.88) en wa/collect (colores sólidos) y relleno
+  sólido con var(--blue2) + texto blanco en el botón de teléfono
+  (estilo contorno) al pasar el ratón.
+- Verificado: este repo no usa el patrón de franja de insignias bajo
+  el H1 (familia Dyson); no aplica la reubicación.
