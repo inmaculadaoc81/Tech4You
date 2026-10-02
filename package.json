@@ -6,6 +6,7 @@
     "node": "22.x"
   },
   "dependencies": {
-    "nodemailer": "^6.9.16"
+    "nodemailer": "^6.9.16",
+    "marked": "^12.0.2"
   }
 }
