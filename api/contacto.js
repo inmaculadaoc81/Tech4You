@@ -3,6 +3,8 @@ const nodemailer = require("nodemailer");
 const clean = (v, max = 3000) =>
   String(v ?? "").replace(/[<>]/g, "").trim().slice(0, max);
 
+const EMAIL_RE = /^[^\s@"(),:;<>[\]\\]+@[^\s@"(),:;<>[\]\\]+\.[a-z]{2,}$/i;
+
 module.exports = async (req, res) => {
   const envKeys = [
     "SMTP_HOST",
@@ -43,6 +45,10 @@ module.exports = async (req, res) => {
     }
 
     const body = req.body || {};
+    if (clean(body.website)) return res.status(200).json({ ok: true });
+    const ts = Number(body.ts);
+    if (!ts || Date.now() - ts < 2000) return res.status(200).json({ ok: true });
+
     const nombre = clean(body.nombre, 120);
     const telefono = clean(body.telefono, 60);
     const email = clean(body.email, 180);
@@ -53,6 +59,12 @@ module.exports = async (req, res) => {
       return res.status(400).json({
         ok: false,
         code: "INVALID_FORM_DATA"
+      });
+    }
+    if (!EMAIL_RE.test(email)) {
+      return res.status(400).json({
+        ok: false,
+        code: "INVALID_EMAIL"
       });
     }
 

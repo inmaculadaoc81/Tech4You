@@ -40,7 +40,7 @@
 
 <section id="cita" class="soft"><div class="wrap calendar-grid"><div><div class="tag">Si prefieres dejarlo agendado</div><h2 class="title">Reserva una cita de 30 minutos.</h2><p class="lead">Elige directamente el día y la hora que mejor te venga.</p></div><div class="calendar"><iframe src="https://cal.com/kelatos/30min?embed=true&theme=light&attendeePhoneNumber=%2B34&overlayCalendar=true" title="Reserva una cita con Tech4You" loading="lazy"></iframe></div></div></section>
 
-<section id="contacto"><div class="wrap formgrid"><div><div class="tag">Cuéntanos qué ha pasado</div><h2 class="title">No necesitas diagnosticarlo tú.</h2><p class="lead">Dinos qué hace, qué ha dejado de hacer y si tienes información importante dentro.</p><p><b>Teléfono:</b><br><a href="tel:+34918294654">+34 918 29 46 54</a></p></div><div class="formbox"><form id="contact-form"><label>Nombre<input name="nombre" required></label><label>Teléfono<input name="telefono" required></label><label>Correo electrónico<input type="email" name="email" required></label><label>Equipo<select name="equipo"><option>Portátil HP</option><option>Ordenador HP</option><option>All-in-One HP</option><option>Otro</option></select></label><label class="full">¿Qué le ocurre?<textarea name="mensaje" required></textarea></label><label class="full"><input type="checkbox" required style="width:auto"> Acepto la <a class="privacy-link" href="https://kelatos.com/privacy-policy/" target="_blank" rel="noopener">política de privacidad</a>.</label><button class="submit full" type="submit">Enviar consulta</button><p id="form-status" class="full" aria-live="polite"></p></form></div></div></section>
+<section id="contacto"><div class="wrap formgrid"><div><div class="tag">Cuéntanos qué ha pasado</div><h2 class="title">No necesitas diagnosticarlo tú.</h2><p class="lead">Dinos qué hace, qué ha dejado de hacer y si tienes información importante dentro.</p><p><b>Teléfono:</b><br><a href="tel:+34918294654">+34 918 29 46 54</a></p></div><div class="formbox"><form id="contact-form"><input type="text" name="website" autocomplete="off" tabindex="-1" aria-hidden="true" style="position:absolute;left:-9999px;opacity:0;height:0;width:0" value=""><label>Nombre<input name="nombre" required></label><label>Teléfono<input name="telefono" required></label><label>Correo electrónico<input type="email" name="email" required></label><label>Equipo<select name="equipo"><option>Portátil HP</option><option>Ordenador HP</option><option>All-in-One HP</option><option>Otro</option></select></label><label class="full">¿Qué le ocurre?<textarea name="mensaje" required></textarea></label><label class="full"><input type="checkbox" required style="width:auto"> Acepto la <a class="privacy-link" href="https://kelatos.com/privacy-policy/" target="_blank" rel="noopener">política de privacidad</a>.</label><button class="submit full" type="submit">Enviar consulta</button><p id="form-status" class="full" aria-live="polite"></p></form></div></div></section>
 
 <section class="seo-content soft" id="guia"><div class="wrap"><div class="tag">Guía</div><h2 class="title">Qué suele fallar en un HP y cómo lo diagnosticamos</h2>
 <div class="seo-text">
@@ -99,6 +99,7 @@ createChat({
   const form = document.querySelector('#contact-form');
   const status = document.querySelector('#form-status');
   if (!form) return;
+  const formLoadedAt = Date.now();
 
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
@@ -112,7 +113,7 @@ createChat({
       const response = await fetch('/api/contacto', {
         method: 'POST',
         headers: {'Content-Type':'application/json'},
-        body: JSON.stringify(Object.fromEntries(new FormData(form).entries()))
+        body: JSON.stringify(Object.assign(Object.fromEntries(new FormData(form).entries()),{ts:formLoadedAt}))
       });
 
       const data = await response.json().catch(() => ({}));
